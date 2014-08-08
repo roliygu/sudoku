@@ -1,6 +1,7 @@
 package com.roliy.sudoku;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,7 +21,11 @@ public class MyView extends View{
 		Paint paint = new Paint();
 		paint.setColor(Color.BLUE);
 		
-		canvas.drawLine(50, 50, 100, 100, paint);
+		paint.setTextSize(100);
+		
+		canvas.drawText("apple", 50, 200, paint);
+		canvas.drawLine(0,  200, 500, 200, paint); 
+		canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher), 0, 0, paint);
 		super.onDraw(canvas);
 	}
 	
