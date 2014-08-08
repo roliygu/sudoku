@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
 import android.provider.Settings.System;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,9 @@ import android.view.View;
 public class SudokuView extends View{
 	private float width;
 	private float height;
+	
+	private Game game = new Game();
+	
 	public SudokuView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -44,11 +48,16 @@ public class SudokuView extends View{
 		nPaint.setColor(getResources().getColor(R.color.sudoku_dark));
 		nPaint.setStyle(Paint.Style.STROKE);
 		nPaint.setTextSize(height*0.75f);
-		// æ”÷–∂‘∆Î
 		nPaint.setTextAlign(Paint.Align.CENTER);
 		
-		float x = width/2f;
-		canvas.drawText("1", 3*width+x, 61, nPaint);
+		FontMetrics fm = nPaint.getFontMetrics();
+		float x = width/2;
+		float y = height/2 - (fm.ascent+fm.descent)/2;
+		
+		for(int i=0;i<9;i++){
+			for(int j=0;j<9;j++)
+				canvas.drawText(game.getTilesString(i, j), i*width+x, j*height+y, nPaint);
+		}
 		super.onDraw(canvas);
 	}
 	@Override
