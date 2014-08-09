@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.provider.Settings.System;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class SudokuView extends View{
@@ -65,6 +66,24 @@ public class SudokuView extends View{
 		this.width = w/9f;
 		this.height = h/9f;
 		super.onSizeChanged(w, h, oldw, oldh);
+	}
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		if(event.getAction()!=MotionEvent.ACTION_DOWN){
+			return super.onTouchEvent(event);
+		}
+		int selectedX = (int)(event.getX()/width);
+		int selectedY = (int)(event.getY()/height);
+		Log.d("Debug","break1");
+		game.calculateAllUsedTiles();
+		int used[] = game.getUsedTilesByCoor(selectedX, selectedY);
+		Log.d("Debug","break2");
+		for(int i=0;i<used.length;i++){	
+			Log.d("Debug", String.valueOf(used[i]));
+		}
+		
+		return true;
 	}
 	
 	
