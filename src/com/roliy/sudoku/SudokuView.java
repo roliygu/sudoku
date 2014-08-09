@@ -1,5 +1,6 @@
 package com.roliy.sudoku;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,8 +8,10 @@ import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
 import android.provider.Settings.System;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 public class SudokuView extends View{
 	private float width;
@@ -78,11 +81,20 @@ public class SudokuView extends View{
 		Log.d("Debug","break1");
 		game.calculateAllUsedTiles();
 		int used[] = game.getUsedTilesByCoor(selectedX, selectedY);
-		Log.d("Debug","break2");
-		for(int i=0;i<used.length;i++){	
-			Log.d("Debug", String.valueOf(used[i]));
+		StringBuffer sb = new StringBuffer();
+		for(int i=0;i<used.length;i++){
+			sb.append(used[i]);
 		}
 		
+		LayoutInflater lInflater = LayoutInflater.from(this.getContext());
+		View layoutView = lInflater.inflate(R.layout.dialog, null);
+		TextView tV = (TextView) layoutView.findViewById(R.id.usedTextId);
+		
+		tV.setText(sb.toString());
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+		builder.setView(layoutView);
+		AlertDialog dialog = builder.create();
+		dialog.show();
 		return true;
 	}
 	
