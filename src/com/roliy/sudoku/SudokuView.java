@@ -16,7 +16,8 @@ import android.widget.TextView;
 public class SudokuView extends View{
 	private float width;
 	private float height;
-	
+	private int selectedX;
+	private int selectedY;
 	private Game game = new Game();
 	
 	public SudokuView(Context context) {
@@ -76,8 +77,8 @@ public class SudokuView extends View{
 		if(event.getAction()!=MotionEvent.ACTION_DOWN){
 			return super.onTouchEvent(event);
 		}
-		int selectedX = (int)(event.getX()/width);
-		int selectedY = (int)(event.getY()/height);
+		selectedX = (int)(event.getX()/width);
+		selectedY = (int)(event.getY()/height);
 		Log.d("Debug","break1");
 		game.calculateAllUsedTiles();
 		int used[] = game.getUsedTilesByCoor(selectedX, selectedY);
@@ -86,20 +87,16 @@ public class SudokuView extends View{
 			sb.append(used[i]);
 		}
 		
-		KeyDialog kDialog = new KeyDialog(getContext(), used);
+		KeyDialog kDialog = new KeyDialog(getContext(), used, this);
 		kDialog.show();
-		//LayoutInflater lInflater = LayoutInflater.from(this.getContext());
-		//View layoutView = lInflater.inflate(R.layout.dialog, null);
-		//TextView tV = (TextView) layoutView.findViewById(R.id.usedTextId);
-		
-		//tV.setText(sb.toString());
-		//AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-		//builder.setView(layoutView);
-		//AlertDialog dialog = builder.create();
-		//dialog.show();
 		return true;
 	}
 	
+	public void setSelectedTile(int tile){
+		if(game.setTileIfValid(selectedX, selectedY, tile)){
+			// 刷新整个View,调用View的ondraw()方法
+			invalidate();
+		}
+	}
 	
-
 }

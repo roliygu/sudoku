@@ -8,10 +8,12 @@ import android.view.View;
 public class KeyDialog extends Dialog{
 	private final View keys[] = new View[9];
 	private final int used[];
+	private SudokuView sView;
 	
-	public KeyDialog(Context context, int used[]) {
+	public KeyDialog(Context context, int used[], SudokuView sv) {
 		super(context);
 		this.used = used;
+		this.sView = sv;
 	}
 
 	@Override
@@ -27,6 +29,7 @@ public class KeyDialog extends Dialog{
 				keys[used[i]-1].setVisibility(View.INVISIBLE);
 			}
 		}
+		setListenners();
 	} 
 	
 	private void findViews(){
@@ -39,5 +42,19 @@ public class KeyDialog extends Dialog{
 		keys[6] = findViewById(R.id.keypad_7);
 		keys[7] = findViewById(R.id.keypad_8);
 		keys[8] = findViewById(R.id.keypad_9);
+	}
+	private void returnResult(int tile){
+		sView.setSelectedTile(tile);
+		dismiss();
+	}
+	private void setListenners(){
+		for(int i=0;i<keys.length;i++){
+			final int t = i+1;
+			keys[i].setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					returnResult(t);
+				}
+			});
+		}
 	}
 }
