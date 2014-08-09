@@ -47,11 +47,9 @@ public class Game {
 					c[t-1]=t;
 				}
 			}
-			if(i!=x){
-				int t = getTile(i, y);
-				if(t!=0){
-					c[t-1]=t;
-				}
+			int t = getTile(i, y);
+			if(t!=0){
+				c[t-1]=t;
 			}
 		}		
 		int startx = (x/3)*3;

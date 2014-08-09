@@ -86,15 +86,17 @@ public class SudokuView extends View{
 			sb.append(used[i]);
 		}
 		
-		LayoutInflater lInflater = LayoutInflater.from(this.getContext());
-		View layoutView = lInflater.inflate(R.layout.dialog, null);
-		TextView tV = (TextView) layoutView.findViewById(R.id.usedTextId);
+		KeyDialog kDialog = new KeyDialog(getContext(), used);
+		kDialog.show();
+		//LayoutInflater lInflater = LayoutInflater.from(this.getContext());
+		//View layoutView = lInflater.inflate(R.layout.dialog, null);
+		//TextView tV = (TextView) layoutView.findViewById(R.id.usedTextId);
 		
-		tV.setText(sb.toString());
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-		builder.setView(layoutView);
-		AlertDialog dialog = builder.create();
-		dialog.show();
+		//tV.setText(sb.toString());
+		//AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+		//builder.setView(layoutView);
+		//AlertDialog dialog = builder.create();
+		//dialog.show();
 		return true;
 	}
 	
